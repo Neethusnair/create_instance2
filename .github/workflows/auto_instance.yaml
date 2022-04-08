@@ -18,8 +18,8 @@ env:
   namePrefix: "${{ github.event.client_payload.deployment_file.namePrefix }}-"
 #   name: "'${{ github.event.client_payload.deployment_file.namePrefix }}'_customer"
 #   namePrefix: "${name} -"
-  label: '${{ github.event.client_payload.deployment_file.label }}'
-#   labelName: "${{ github.event.client_payload.deployment_file.namePrefix }}-customer"
+#   label: '${{ github.event.client_payload.deployment_file.label }}'
+  labelName: "${{ github.event.client_payload.deployment_file.namePrefix }}-customer"
   containerPortVal: '${{ github.event.client_payload.deployment_file.containerPortVal }}'
   portVal:  '${{ github.event.client_payload.deployment_file.portVal }}'
   domainName:  '${{ github.event.client_payload.deployment_file.domainName }}'
