@@ -53,7 +53,7 @@ jobs:
       
          # Create new record with latest cluster external IP.
          #CLUSTER_IP=34.136.63.109
-         CLUSTER_HOSTNAME= hello.hi.com
+         CLUSTER_HOSTNAME= "hello.hi.com"
          #CLUSTER_HOSTNAME=$(kubectl -n istio-system get service istio-ingressgateway -o jsonpath='{.status.loadBalancer.ingress[0].hostname}')
          curl -X POST "https://api.cloudflare.com/client/v4/zones/${{ secrets.CLOUDFLARE_DNS_ZONE }}/dns_records" \
            -H "X-Auth-Email: ${{ secrets.CLOUDFLARE_EMAIL }}" \
