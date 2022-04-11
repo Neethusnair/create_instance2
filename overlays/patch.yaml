@@ -3,15 +3,15 @@ kind: Deployment
 metadata:
   name: frontend-deployment
   labels:
-    app: managedtest-customer
+    app: redcross4-customer
 spec:
   selector:
     matchLabels:
-      app: managedtest-customer
+      app: redcross4-customer
   template:
     metadata:
       labels: # labels to select/identify the deployment
-        app: managedtest-customer
+        app: redcross4-customer
     spec:     # pod spec
       containers: 
       - name: frontend
@@ -29,10 +29,10 @@ kind: Service
 metadata:
   name: frontend-service
   labels:
-    app: managedtest-customer
+    app: redcross4-customer
 spec:
   selector:
-    app: managedtest-customer
+    app: redcross4-customer
   ports:
     - port: 8080
       $patch: delete
@@ -52,14 +52,14 @@ spec:
   #   - abc.sreyo.in
   #     $patch: delete
     # - def.sreyo.in  
-    - managedtest.sreyo.in
+    - redcross4-api.sreyo.in
   http:
     - route:
         - destination:
             # host: frontend-service.default.svc.cluster.local
             # $patch: delete
             # host: test-frontend-service.default.svc.cluster.local
-            host: managedtest-frontend-service.default.svc.cluster.local
+            host: redcross4-frontend-service.default.svc.cluster.local
             port:
               # number: 8081  
               # $patch: delete 
