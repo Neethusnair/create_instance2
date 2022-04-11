@@ -116,78 +116,78 @@ jobs:
   #       # kubectl get services -o wide
         
        
-  job2:
-    needs: Job1
-    name: Set-up subdomain
-    runs-on: ubuntu-latest
+  # job2:
+  #   needs: Job1
+  #   name: Set-up subdomain
+  #   runs-on: ubuntu-latest
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
-    steps:
-     - name: Checkout
-       uses: actions/checkout@v2
+  #   # Steps represent a sequence of tasks that will be executed as part of the job
+  #   steps:
+  #    - name: Checkout
+  #      uses: actions/checkout@v2
             
-    # AWS Credentials
-     - uses: aws-actions/configure-aws-credentials@v1
-       with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: ${{ env.EKS_REGION }}
+  #   # AWS Credentials
+  #    - uses: aws-actions/configure-aws-credentials@v1
+  #      with:
+  #       aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  #       aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  #       aws-region: ${{ env.EKS_REGION }}
 
-    # Get the EKS credentials so we can deploy to the cluster
-     - run: |-
-        aws eks --region $EKS_REGION update-kubeconfig --name $EKS_CLUSTER
+  #   # Get the EKS credentials so we can deploy to the cluster
+  #    - run: |-
+  #       aws eks --region $EKS_REGION update-kubeconfig --name $EKS_CLUSTER
 
-    # Add domain for frontend   
-     - name: Update CloudFlare DNS with Cluster IP for frontend 
-       run: |-
-         # purge any existing records for our AWS subdomain
-         existing_records=( $(curl -X GET "https://api.cloudflare.com/client/v4/zones/${{ secrets.CLOUDFLARE_DNS_ZONE }}/dns_records?type=CNAME&name=${FRONTEND_NAME}.sreyo.in" \
-            -H "X-Auth-Email: ${{ secrets.CLOUDFLARE_EMAIL }}" \
-            -H "X-Auth-Key: ${{ secrets.CLOUDFLARE_API_KEY }}" \
-            -H "Content-Type: application/json"   | jq -r '.result[].id') )
-         for record in ${existing_records[@]}; do
-           curl -X DELETE "https://api.cloudflare.com/client/v4/zones/${{ secrets.CLOUDFLARE_DNS_ZONE }}/dns_records/${record}" \
-              -H "X-Auth-Email: ${{ secrets.CLOUDFLARE_EMAIL }}" \
-              -H "X-Auth-Key: ${{ secrets.CLOUDFLARE_API_KEY }}" \
-              -H "Content-Type: application/json"
-         done
+  #   # Add domain for frontend   
+  #    - name: Update CloudFlare DNS with Cluster IP for frontend 
+  #      run: |-
+  #        # purge any existing records for our AWS subdomain
+  #        existing_records=( $(curl -X GET "https://api.cloudflare.com/client/v4/zones/${{ secrets.CLOUDFLARE_DNS_ZONE }}/dns_records?type=CNAME&name=${FRONTEND_NAME}.sreyo.in" \
+  #           -H "X-Auth-Email: ${{ secrets.CLOUDFLARE_EMAIL }}" \
+  #           -H "X-Auth-Key: ${{ secrets.CLOUDFLARE_API_KEY }}" \
+  #           -H "Content-Type: application/json"   | jq -r '.result[].id') )
+  #        for record in ${existing_records[@]}; do
+  #          curl -X DELETE "https://api.cloudflare.com/client/v4/zones/${{ secrets.CLOUDFLARE_DNS_ZONE }}/dns_records/${record}" \
+  #             -H "X-Auth-Email: ${{ secrets.CLOUDFLARE_EMAIL }}" \
+  #             -H "X-Auth-Key: ${{ secrets.CLOUDFLARE_API_KEY }}" \
+  #             -H "Content-Type: application/json"
+  #        done
       
-         # Create new record with latest cluster external IP.
-         #CLUSTER_IP=34.136.63.109
-         CLUSTER_HOSTNAME=$(kubectl -n istio-system get service istio-ingressgateway -o jsonpath='{.status.loadBalancer.ingress[0].hostname}')
-         curl -X POST "https://api.cloudflare.com/client/v4/zones/${{ secrets.CLOUDFLARE_DNS_ZONE }}/dns_records" \
-           -H "X-Auth-Email: ${{ secrets.CLOUDFLARE_EMAIL }}" \
-           -H "X-Auth-Key: ${{ secrets.CLOUDFLARE_API_KEY }}" \
-           -H "Content-Type: application/json" \
-           --data '{"type":"CNAME","name":"'${FRONTEND_NAME}'","content":"'${CLUSTER_HOSTNAME}'","ttl":120,"priority":10,"proxied":true}'       
+  #        # Create new record with latest cluster external IP.
+  #        #CLUSTER_IP=34.136.63.109
+  #        CLUSTER_HOSTNAME=$(kubectl -n istio-system get service istio-ingressgateway -o jsonpath='{.status.loadBalancer.ingress[0].hostname}')
+  #        curl -X POST "https://api.cloudflare.com/client/v4/zones/${{ secrets.CLOUDFLARE_DNS_ZONE }}/dns_records" \
+  #          -H "X-Auth-Email: ${{ secrets.CLOUDFLARE_EMAIL }}" \
+  #          -H "X-Auth-Key: ${{ secrets.CLOUDFLARE_API_KEY }}" \
+  #          -H "Content-Type: application/json" \
+  #          --data '{"type":"CNAME","name":"'${FRONTEND_NAME}'","content":"'${CLUSTER_HOSTNAME}'","ttl":120,"priority":10,"proxied":true}'       
 
-    # Add domain for backend   
-     - name: Update CloudFlare DNS with Cluster IP for backend
-       run: |-
-         # purge any existing records for our AWS subdomain
-         existing_records=( $(curl -X GET "https://api.cloudflare.com/client/v4/zones/${{ secrets.CLOUDFLARE_DNS_ZONE }}/dns_records?type=CNAME&name=${BACKEND_NAME}.sreyo.in" \
-            -H "X-Auth-Email: ${{ secrets.CLOUDFLARE_EMAIL }}" \
-            -H "X-Auth-Key: ${{ secrets.CLOUDFLARE_API_KEY }}" \
-            -H "Content-Type: application/json"   | jq -r '.result[].id') )
-         for record in ${existing_records[@]}; do
-           curl -X DELETE "https://api.cloudflare.com/client/v4/zones/${{ secrets.CLOUDFLARE_DNS_ZONE }}/dns_records/${record}" \
-              -H "X-Auth-Email: ${{ secrets.CLOUDFLARE_EMAIL }}" \
-              -H "X-Auth-Key: ${{ secrets.CLOUDFLARE_API_KEY }}" \
-              -H "Content-Type: application/json"
-         done
+  #   # Add domain for backend   
+  #    - name: Update CloudFlare DNS with Cluster IP for backend
+  #      run: |-
+  #        # purge any existing records for our AWS subdomain
+  #        existing_records=( $(curl -X GET "https://api.cloudflare.com/client/v4/zones/${{ secrets.CLOUDFLARE_DNS_ZONE }}/dns_records?type=CNAME&name=${BACKEND_NAME}.sreyo.in" \
+  #           -H "X-Auth-Email: ${{ secrets.CLOUDFLARE_EMAIL }}" \
+  #           -H "X-Auth-Key: ${{ secrets.CLOUDFLARE_API_KEY }}" \
+  #           -H "Content-Type: application/json"   | jq -r '.result[].id') )
+  #        for record in ${existing_records[@]}; do
+  #          curl -X DELETE "https://api.cloudflare.com/client/v4/zones/${{ secrets.CLOUDFLARE_DNS_ZONE }}/dns_records/${record}" \
+  #             -H "X-Auth-Email: ${{ secrets.CLOUDFLARE_EMAIL }}" \
+  #             -H "X-Auth-Key: ${{ secrets.CLOUDFLARE_API_KEY }}" \
+  #             -H "Content-Type: application/json"
+  #        done
       
-         # Create new record with latest cluster external IP.
-         #CLUSTER_IP=34.136.63.109
-         CLUSTER_HOSTNAME=$(kubectl -n istio-system get service istio-ingressgateway -o jsonpath='{.status.loadBalancer.ingress[0].hostname}')
-         curl -X POST "https://api.cloudflare.com/client/v4/zones/${{ secrets.CLOUDFLARE_DNS_ZONE }}/dns_records" \
-           -H "X-Auth-Email: ${{ secrets.CLOUDFLARE_EMAIL }}" \
-           -H "X-Auth-Key: ${{ secrets.CLOUDFLARE_API_KEY }}" \
-           -H "Content-Type: application/json" \
-           --data '{"type":"CNAME","name":"'${BACKEND_NAME}'","content":"'${CLUSTER_HOSTNAME}'","ttl":120,"priority":10,"proxied":true}'       
+  #        # Create new record with latest cluster external IP.
+  #        #CLUSTER_IP=34.136.63.109
+  #        CLUSTER_HOSTNAME=$(kubectl -n istio-system get service istio-ingressgateway -o jsonpath='{.status.loadBalancer.ingress[0].hostname}')
+  #        curl -X POST "https://api.cloudflare.com/client/v4/zones/${{ secrets.CLOUDFLARE_DNS_ZONE }}/dns_records" \
+  #          -H "X-Auth-Email: ${{ secrets.CLOUDFLARE_EMAIL }}" \
+  #          -H "X-Auth-Key: ${{ secrets.CLOUDFLARE_API_KEY }}" \
+  #          -H "Content-Type: application/json" \
+  #          --data '{"type":"CNAME","name":"'${BACKEND_NAME}'","content":"'${CLUSTER_HOSTNAME}'","ttl":120,"priority":10,"proxied":true}'       
 
 
-  job3:
-    needs: job2
+  job2:
+    needs: job1
     name: Send Callback
     runs-on: ubuntu-latest
 
@@ -198,8 +198,12 @@ jobs:
 
     # Send call back  
      - name: Send callback to application
-       run: |-   
-         curl -X POST "https://api.managedorg.io/callback" \
-            -H "Content-Type: application/json" \
-            --data '{"type":"onboarding","status":"success","priority":10}'
+       run: |-  
+       curl -X POST \
+          -H "Authorization: ${{ secrets.PERSONAL_TOKEN }}" \
+          --data '{"event_type": "subdomain", "client_payload": { "domain_name": "nss"}}' \
+          https://api.github.com/repos/Neethusnair/create_instance2/dispatches 
+        #  curl -X POST "https://api.managedorg.io/callback" \
+        #     -H "Content-Type: application/json" \
+        #     --data '{"type":"onboarding","status":"success","priority":10}'
 
