@@ -16,7 +16,7 @@ env:
   fileName1: "base/kustomization"
   fileName: "./overlays/patch"
   namePrefix: "${{ github.event.client_payload.deployment_file.namePrefix }}-"
-#   name: "'${{ github.event.client_payload.deployment_file.namePrefix }}'_customer"
+  labelName: "${{ github.event.client_payload.deployment_file.namePrefix }}-customer"
 #   namePrefix: "${name} -"
 #   label: '${{ github.event.client_payload.deployment_file.label }}'
   databaseName: '${{ github.event.client_payload.deployment_file.namePrefix }}'
