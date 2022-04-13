@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: frontend-deployment
   labels:
-    app: redcross-customer
+    app: redcross1-customer
 spec:
   selector:
     matchLabels:
