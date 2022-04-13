@@ -89,7 +89,7 @@ jobs:
      - run: |-
         aws eks --region $EKS_REGION update-kubeconfig --name $EKS_CLUSTER
 
-    Add domain for frontend   
+    # Add domain for frontend   
      - name: Update CloudFlare DNS with Cluster IP for frontend 
        run: |-
          # purge any existing records for our AWS subdomain
