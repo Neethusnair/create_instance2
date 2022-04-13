@@ -23,7 +23,7 @@ spec:
         - name: PORT_VALUE
           value: "containerPortVal"  
         - name: DATABASE_NAME
-          value: "namePrefix_name"    
+          value: "databaseName"    
         
 ---
 apiVersion: v1
