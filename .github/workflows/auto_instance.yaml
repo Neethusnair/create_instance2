@@ -187,7 +187,7 @@ jobs:
 
 
   job2:
-    needs: job1
+    needs: Job1
     name: Send call to subdomain workflow
     runs-on: ubuntu-latest
 
