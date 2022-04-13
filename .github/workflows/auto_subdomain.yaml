@@ -137,3 +137,21 @@ jobs:
            -H "X-Auth-Key: ${{ secrets.CLOUDFLARE_API_KEY }}" \
            -H "Content-Type: application/json" \
            --data '{"type":"CNAME","name":"'${BACKEND_NAME}'","content":"'${CLUSTER_HOSTNAME}'","ttl":120,"priority":10,"proxied":true}'       
+
+
+  Job3:
+    needs: Job2
+    name: Send Callback
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+     - name: Checkout
+       uses: actions/checkout@v2
+
+    # Send call back  
+     - name: Send callback to application
+       run: |-   
+         curl -X POST "https://api.managedorg.io/callback" \
+            -H "Content-Type: application/json" \
+            --data '{"type":"onboarding","status":"success","priority":10}'           
