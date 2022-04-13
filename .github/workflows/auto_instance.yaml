@@ -188,7 +188,7 @@ jobs:
 
   job2:
     needs: job1
-    name: Send Callback
+    name: Send call to subdomain workflow
     runs-on: ubuntu-latest
 
     # Steps represent a sequence of tasks that will be executed as part of the job
@@ -196,14 +196,22 @@ jobs:
      - name: Checkout
        uses: actions/checkout@v2
 
-    # Send call back  
-     - name: Send callback to application
-       run: |-  
-        curl -X POST \
-          -H "Authorization: ${{ secrets.PERSONAL_TOKEN }}" \
-          --data '{"event_type": "subdomain", "client_payload": { "domain_name": "nss"}}' \
-          https://api.github.com/repos/Neethusnair/create_instance2/dispatches 
-        #  curl -X POST "https://api.managedorg.io/callback" \
-        #     -H "Content-Type: application/json" \
-        #     --data '{"type":"onboarding","status":"success","priority":10}'
+    - name: Repository Dispatch to subdomain workflow
+        uses: peter-evans/repository-dispatch@v1
+        with:
+          token: ${{ secrets.PERSONAL_TOKEN }}
+          event-type: subdomain
+          client-payload: '{"domain_name": "nss"}'  
+          #client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}", "test": "test message"}' 
+
+    # # Send call back  
+    #  - name: Send callback to application
+    #    run: |-  
+    #     curl -X POST \
+    #       -H "Authorization: ${{ secrets.PERSONAL_TOKEN }}" \
+    #       --data '{"event_type": "subdomain", "client_payload": { "domain_name": "nss"}}' \
+    #       https://api.github.com/repos/Neethusnair/create_instance2/dispatches 
+    #     #  curl -X POST "https://api.managedorg.io/callback" \
+    #     #     -H "Content-Type: application/json" \
+    #     #     --data '{"type":"onboarding","status":"success","priority":10}'
 
