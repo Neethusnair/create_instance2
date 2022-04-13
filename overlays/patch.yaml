@@ -3,15 +3,15 @@ kind: Deployment
 metadata:
   name: frontend-deployment
   labels:
-    app: 
+    app: redcross1-customer
 spec:
   selector:
     matchLabels:
-      app: 
+      app: redcross1-customer
   template:
     metadata:
       labels: # labels to select/identify the deployment
-        app: 
+        app: redcross1-customer
     spec:     # pod spec
       containers: 
       - name: frontend
@@ -23,7 +23,7 @@ spec:
         - name: PORT_VALUE
           value: "1337"  
         - name: DATABASE_NAME
-          value: "redcross"    
+          value: "redcross1"    
         
 ---
 apiVersion: v1
@@ -31,10 +31,10 @@ kind: Service
 metadata:
   name: frontend-service
   labels:
-    app: 
+    app: redcross1-customer
 spec:
   selector:
-    app: 
+    app: redcross1-customer
   ports:
     - port: 8080
       $patch: delete
@@ -61,7 +61,7 @@ spec:
             # host: frontend-service.default.svc.cluster.local
             # $patch: delete
             # host: test-frontend-service.default.svc.cluster.local
-            host: redcross-frontend-service.default.svc.cluster.local
+            host: redcross1-frontend-service.default.svc.cluster.local
             port:
               # number: 8081  
               # $patch: delete 
