@@ -201,7 +201,7 @@ jobs:
        with:
           token: ${{ secrets.PERSONAL_TOKEN }}
           event-type: subdomain
-          client-payload: '{"domain_name": "nss"}'  
+          client-payload: '{"domain_name": "${{ FRONTEND_NAME }}"}'  
           #client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}", "test": "test message"}' 
 
     # # Send call back  
