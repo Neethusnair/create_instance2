@@ -47,7 +47,7 @@ jobs:
          fetch-depth: 0 # otherwise, there would be errors pushing refs to the destination repository.
      - name: Create local changes
        run: |
-        echo ${FRONTEND_NAME} 
+        echo ${FRONTEND_NAME}
         sed "s|Neethu_hello|$namePrefix|g; " $templateName1.yaml > $fileName1.yaml
         #sed "s|containerPortVal|$containerPortVal|g; s|portVal|$portVal|g; s|serviceName|$serviceName|g;" $templateName.yaml > $fileName.yaml
         sed "s|labelName|$labelName|g; s|containerPortVal|$containerPortVal|g; s|portVal|$portVal|g; s|domainName|$domainName|g; s|serviceName|$serviceName|g;" $templateName.yaml > $fileName.yaml
