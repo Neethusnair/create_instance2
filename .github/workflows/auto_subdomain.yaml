@@ -35,6 +35,7 @@ jobs:
     # Get the EKS credentials so we can deploy to the cluster
      - run: |-
         aws eks --region $EKS_REGION update-kubeconfig --name $EKS_CLUSTER
+        echo ${FRONTEND_NAME}
 
     # Add domain for frontend   
      - name: Update CloudFlare DNS with Cluster IP for frontend 
