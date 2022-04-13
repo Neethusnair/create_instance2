@@ -34,6 +34,8 @@ spec:
         env:
         - name: PORT_VALUE
           value: "10"
+        - name: DATABASE_NAME
+          value: "dbname"  
         
 ---
 apiVersion: v1

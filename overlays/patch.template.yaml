@@ -21,7 +21,9 @@ spec:
         - containerPort: containerPortVal  
         env:
         - name: PORT_VALUE
-          value: "containerPortVal"   
+          value: "containerPortVal"  
+        - name: DATABASE_NAME
+          value: "namePrefix_name"    
         
 ---
 apiVersion: v1
