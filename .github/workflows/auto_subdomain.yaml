@@ -172,12 +172,12 @@ jobs:
          Job2_status=${{needs.Job2.outputs.output1}}
          echo ${Job2_status}
          status=${{needs.Job1.outputs.output1}}
-         if [[ ${Job1_status} == "failure" || ${Job2_status} == "failure" ]]; then ${status} = "failure"; else ${status} = "success"; fi
+         if [[ ${Job1_status} == 'failure' || ${Job2_status} == 'failure ]]; then ${status} = 'failure'; else ${status} = 'success'; fi
          echo ${status}
 
       # - name: if jobs success
       #   run: |-
-      #     if [[ ${{ Job1_status }} == "success" && ${{ Job2_status }} == "success"]]; then status = "success"; else status = "failure"; fi
+      #     if [[ ${{ Job1_status }} == "success && ${{ Job2_status }} == "success"]]; then status = "success"; else status = "failure"; fi
       #     echo ${status}
 
     # Send call back  
