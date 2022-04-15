@@ -171,7 +171,7 @@ jobs:
          echo ${Job1_status}
          Job2_status=${{needs.Job2.outputs.output1}}
          echo ${Job2_status}
-         status="success"
+         status=success
          if [[ ${Job1_status} == "failure" || ${Job2_status} == "failure" ]]; then ${status} = "failure"; else ${status} = "success"; fi
          echo ${status}
 
