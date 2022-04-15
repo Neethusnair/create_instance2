@@ -72,8 +72,8 @@ jobs:
         # kubectl get services -o wide
 
     - name: get job status
-       id: step1
-       run: echo "::set-output name=test::${{ job.status}}"    
+      id: step1
+      run: echo "::set-output name=test::${{ job.status}}"    
 
   Job2:
     needs: Job1
