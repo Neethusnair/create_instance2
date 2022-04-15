@@ -28,6 +28,10 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
 
+    - name: get job status
+      id: step1
+      run: echo "::set-output name=test::${{ job.status}}"   
+
     # AWS Credentials
     - uses: aws-actions/configure-aws-credentials@v1
       with:
@@ -71,9 +75,9 @@ jobs:
         # kubectl rollout status deployment mongodb-deployment
         # kubectl get services -o wide
 
-    - name: get job status
-      id: step1
-      run: echo "::set-output name=test::${{ job.status}}"    
+    # - name: get job status
+    #   id: step1
+    #   run: echo "::set-output name=test::${{ job.status}}"    
 
   Job2:
     needs: Job1
@@ -166,6 +170,7 @@ jobs:
      - name: get job status
        run: |- 
          Job1_status=${{needs.Job1.outputs.output1}}
+         echo ${{needs.Job1.outputs.output1}}
          echo ${Job1_status}
          Job2_status=${{needs.Job2.outputs.output1}}
          echo ${Job2_status}
