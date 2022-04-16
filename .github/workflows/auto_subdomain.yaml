@@ -184,6 +184,7 @@ jobs:
      - name: get job status
        if: ${{ env.Job1_status }} == failure || {{ env.Job2_status }}  == failure 
        run: |- 
+         echo "status=failure" >> $GITHUB_ENV
          echo "${{ env.Job1_status }}"
          echo "${{ env.Job2_status }}"
          echo "${{ env.status }}"
