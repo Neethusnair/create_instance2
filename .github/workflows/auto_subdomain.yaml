@@ -182,6 +182,7 @@ jobs:
         # echo ${status}  
 
      - name: get job status
+       if ${{ env.Job1_status }} == failure || {{ env.Job2_status }}  == failure 
        run: |- 
          echo "${{ env.Job1_status }}"
          echo "${{ env.Job2_status }}"
