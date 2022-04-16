@@ -2,9 +2,9 @@ name: Create subdomian in CF from user's input
 
 # Triggers the workflow on api call
 on:
-#   workflow_dispatch
-  repository_dispatch:
-    types: [subdomain]
+  workflow_dispatch
+#   repository_dispatch:
+#     types: [subdomain]
     
 env:
   # FRONTEND_NAME: ${{ github.event.client_payload.domain_name.frontend_domain }} 
@@ -178,7 +178,8 @@ jobs:
      - name: change status to failure 
        #if: fromJSON( ( ${{ env.Job1_status }} == failure || {{ env.Job2_status }}  == failure ) )
        #if: ${{ env.Job1_status }} == failure || {{ env.Job2_status }}  == failure 
-       if: ${{ env.Job1_status }} == failure
+       if: failure() && ${{ env.Job1_status }} == failure || {{ env.Job2_status }}  == failure
+       #if: ${{ env.Job1_status }} == failure
        run: |- 
          echo "status=failure" >> $GITHUB_ENV
          echo "${{ env.Job1_status }}"
