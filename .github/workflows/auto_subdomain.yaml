@@ -167,9 +167,12 @@ jobs:
 
      - name: get job status
        run: |- 
-        echo "::set-env name=Job1_status::${{needs.Job1.outputs.output1}}"
-        echo "::set-env name=Job2_status::${{needs.Job2.outputs.output1}}"
-        echo "::set-env name=status::success"
+        echo "Job1_status=${{needs.Job1.outputs.output1}}" >> $GITHUB_ENV
+        echo "Job2_status=${{needs.Job2.outputs.output1}}" >> $GITHUB_ENV
+        echo "status=success" >> $GITHUB_ENV
+        # echo "::set-env name=Job1_status::${{needs.Job1.outputs.output1}}"
+        # echo "::set-env name=Job2_status::${{needs.Job2.outputs.output1}}"
+        # echo "::set-env name=status::success"
         # Job1_status=${{needs.Job1.outputs.output1}}
         # echo ${Job1_status}
         # Job2_status=${{needs.Job2.outputs.output1}}
@@ -180,9 +183,12 @@ jobs:
 
      - name: get job status
        run: |- 
-         echo $Job1_status
-         echo $Job2_status
-         echo $status
+         echo "${{ env.Job1_status }}"
+         echo "${{ env.Job2_status }}"
+         echo "${{ env.status }}"
+        #  echo $Job1_status
+        #  echo $Job2_status
+        #  echo $status
 
 
     #  - name: get job status
