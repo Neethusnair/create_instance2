@@ -167,13 +167,33 @@ jobs:
 
      - name: get job status
        run: |- 
-         Job1_status=${{needs.Job1.outputs.output1}}
-         echo ${Job1_status}
-         Job2_status=${{needs.Job2.outputs.output1}}
-         echo ${Job2_status}
-         status=success
-         if [[ ${Job1_status} == failure || ${Job2_status} == failure ]]; then status = failure; else status = success; fi
-         echo ${status}
+        echo "::set-env name=Job1_status::${{needs.Job1.outputs.output1}}"
+        echo "::set-env name=Job2_status::${{needs.Job2.outputs.output1}}"
+        echo "::set-env name=status::success"
+        # Job1_status=${{needs.Job1.outputs.output1}}
+        # echo ${Job1_status}
+        # Job2_status=${{needs.Job2.outputs.output1}}
+        # echo ${Job2_status}
+        # status=success
+        # if [[ ${Job1_status} == failure || ${Job2_status} == failure ]]; then status = failure; else status = success; fi
+        # echo ${status}  
+
+     - name: get job status
+       run: |- 
+         echo $Job1_status
+         echo $Job2_status
+         echo $status
+
+
+    #  - name: get job status
+    #    run: |- 
+    #      Job1_status=${{needs.Job1.outputs.output1}}
+    #      echo ${Job1_status}
+    #      Job2_status=${{needs.Job2.outputs.output1}}
+    #      echo ${Job2_status}
+    #      status=success
+    #      if [[ ${Job1_status} == failure || ${Job2_status} == failure ]]; then status = failure; else status = success; fi
+    #      echo ${status}
 
       # - name: if jobs success
       #   run: |-
