@@ -2,9 +2,9 @@ name: Create subdomian in CF from user's input
 
 # Triggers the workflow on api call
 on:
-  workflow_dispatch
-#   repository_dispatch:
-#     types: [subdomain]
+#   workflow_dispatch
+  repository_dispatch:
+    types: [subdomain]
     
 env:
   # FRONTEND_NAME: ${{ github.event.client_payload.domain_name.frontend_domain }} 
