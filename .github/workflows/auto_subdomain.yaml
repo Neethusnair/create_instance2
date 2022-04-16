@@ -177,7 +177,8 @@ jobs:
     # but all subsequent steps in a job will have access
      - name: change status to failure 
        #if: fromJSON( ( ${{ env.Job1_status }} == failure || {{ env.Job2_status }}  == failure ) )
-       if: ${{ env.Job1_status }} == failure || {{ env.Job2_status }}  == failure 
+       #if: ${{ env.Job1_status }} == failure || {{ env.Job2_status }}  == failure 
+       if: ${{ env.Job1_status }} == failure
        run: |- 
          echo "status=failure" >> $GITHUB_ENV
          echo "${{ env.Job1_status }}"
