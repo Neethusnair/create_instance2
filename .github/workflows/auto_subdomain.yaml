@@ -181,7 +181,7 @@ jobs:
         # if [[ ${Job1_status} == failure || ${Job2_status} == failure ]]; then status = failure; else status = success; fi
         # echo ${status}  
 
-     - name: get job status
+     - name: change status to failure
        if: ${{ env.Job1_status }} == failure || {{ env.Job2_status }}  == failure 
        run: |- 
          echo "env.status=failure" >> $GITHUB_ENV
@@ -192,6 +192,9 @@ jobs:
         #  echo $Job2_status
         #  echo $status
 
+     - name: get new status
+       run: |- 
+         echo "${{ env.status }}"
 
     #  - name: get job status
     #    run: |- 
