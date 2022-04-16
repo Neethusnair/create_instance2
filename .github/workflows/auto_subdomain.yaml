@@ -160,7 +160,6 @@ jobs:
     runs-on: ubuntu-latest
     if: always()
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
      - name: Checkout
        uses: actions/checkout@v2
@@ -170,51 +169,28 @@ jobs:
         echo "Job1_status=${{needs.Job1.outputs.output1}}" >> $GITHUB_ENV
         echo "Job2_status=${{needs.Job2.outputs.output1}}" >> $GITHUB_ENV
         echo "status=success" >> $GITHUB_ENV
-        # echo "::set-env name=Job1_status::${{needs.Job1.outputs.output1}}"
-        # echo "::set-env name=Job2_status::${{needs.Job2.outputs.output1}}"
-        # echo "::set-env name=status::success"
-        # Job1_status=${{needs.Job1.outputs.output1}}
-        # echo ${Job1_status}
-        # Job2_status=${{needs.Job2.outputs.output1}}
-        # echo ${Job2_status}
-        # status=success
-        # if [[ ${Job1_status} == failure || ${Job2_status} == failure ]]; then status = failure; else status = success; fi
-        # echo ${status}  
-
-     - name: change status to failure
+        #echo "::set-env name=Job1_status::${{needs.Job1.outputs.output1}}" # decripted
+        # echo "::set-env name=Job2_status::${{needs.Job2.outputs.output1}}" # decripted
+        # echo "::set-env name=status::success" # decripted
+ 
+    # Change status on failure.The step that creates or updates the environment variable does not have access to the new value,
+    # but all subsequent steps in a job will have access
+     - name: change status to failure 
        if: ${{ env.Job1_status }} == failure || {{ env.Job2_status }}  == failure 
        run: |- 
          echo "status=failure" >> $GITHUB_ENV
          echo "${{ env.Job1_status }}"
          echo "${{ env.Job2_status }}"
          echo "${{ env.status }}"
-        #  echo $Job1_status
-        #  echo $Job2_status
-        #  echo $status
 
-     - name: get new status
-       run: |- 
-         echo "${{ env.status }}"
-
-    #  - name: get job status
+    #  - name: get new status
     #    run: |- 
-    #      Job1_status=${{needs.Job1.outputs.output1}}
-    #      echo ${Job1_status}
-    #      Job2_status=${{needs.Job2.outputs.output1}}
-    #      echo ${Job2_status}
-    #      status=success
-    #      if [[ ${Job1_status} == failure || ${Job2_status} == failure ]]; then status = failure; else status = success; fi
-    #      echo ${status}
-
-      # - name: if jobs success
-      #   run: |-
-      #     if [[ ${{ Job1_status }} == "success && ${{ Job2_status }} == "success"]]; then status = "success"; else status = "failure"; fi
-      #     echo ${status}
+    #      echo "${{ env.status }}"
 
     # Send call back  
      - name: Send callback to application
        run: |-  
-         echo ${status}
+         echo "${{ env.status }}"
          curl -X POST "https://api.managedorg.io/callback" \
             -H "Content-Type: application/json" \
             --data '{"type":"onboarding","status":"success","priority":10}'           
