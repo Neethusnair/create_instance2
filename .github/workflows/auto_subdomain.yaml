@@ -71,6 +71,7 @@ jobs:
         # kubectl rollout status deployment mongodb-deployment
         # kubectl get services -o wide
 
+   # set job status to output
     - name: get job status
       id: step1
       if: always()
@@ -148,7 +149,8 @@ jobs:
            -H "X-Auth-Key: ${{ secrets.CLOUDFLARE_API_KEY }}" \
            -H "Content-Type: application/json" \
            --data '{"type":"CNAME","name":"'${BACKEND_NAME}'","content":"'${CLUSTER_HOSTNAME}'","ttl":120,"priority":10,"proxied":true}'       
-  
+   
+    # set job status to output
      - name: get job status
        id: step1
        if: always()
