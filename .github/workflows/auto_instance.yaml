@@ -1,4 +1,4 @@
-name: Create strapi instance from user's input 
+name: Create backend instance from user's input 
 
 # on:
 #   workflow_dispatch
@@ -21,9 +21,10 @@ env:
 #   label: '${{ github.event.client_payload.deployment_file.label }}'
   databaseName: '${{ github.event.client_payload.deployment_file.namePrefix }}'
   containerPortVal: '${{ github.event.client_payload.deployment_file.containerPortVal }}'
-  portVal:  '${{ github.event.client_payload.deployment_file.portVal }}'
-  domainName:  '${{ github.event.client_payload.deployment_file.domainName }}'
-  serviceName:  '${{ github.event.client_payload.deployment_file.serviceName }}'
+  portVal: '${{ github.event.client_payload.deployment_file.portVal }}'
+  domainName: '${{ github.event.client_payload.deployment_file.domainName }}'
+  serviceName: '${{ github.event.client_payload.deployment_file.serviceName }}'
+  JOB_ID: '${{ github.event.client_payload.deployment_file.job_id }}'
   FRONTEND_NAME: '${{ github.event.client_payload.deployment_file.frontend_domain }}'
   BACKEND_NAME: '${{ github.event.client_payload.deployment_file.backend_domain }}' 
   EKS_CLUSTER: dev
@@ -203,7 +204,7 @@ jobs:
        with:
           token: ${{ secrets.PERSONAL_TOKEN }}
           event-type: subdomain
-          client-payload: '{"frontdomain_name": "${{ env.FRONTEND_NAME }}", "domain_name": "${{ env.BACKEND_NAME }}"}'  
+          client-payload: '{"frontdomain_name": "${{ env.FRONTEND_NAME }}", "domain_name": "${{ env.BACKEND_NAME }}", "job_Id": "${{ env.JOB_ID }}"}'  
           #client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}", "test": "test message"}' 
 
     # # Send call back  

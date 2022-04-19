@@ -10,6 +10,7 @@ env:
   # FRONTEND_NAME: ${{ github.event.client_payload.domain_name.frontend_domain }} 
   FRONTEND_NAME: ${{ github.event.client_payload.frontdomain_name }} 
   BACKEND_NAME: ${{ github.event.client_payload.domain_name }} 
+  JOB_ID: ${{ github.event.client_payload.job_Id}}
   # BACKEND_NAME: ${{ github.event.client_payload.domain_name.backend_domain }}  
   EKS_CLUSTER: dev
   EKS_REGION: us-east-2
@@ -196,7 +197,9 @@ jobs:
     # Send call back  
      - name: Send callback to application
        run: |-  
-         echo "${{ env.status }}"
-         curl -X POST "https://api.managedorg.io/callback" \
+         #echo "${{ env.status }}"
+         echo "'${BACKEND_NAME}'"
+         echo "'${status}'"
+         curl -X POST "https://dev.customer1-api.managedorg.io/callback" \
             -H "Content-Type: application/json" \
-            --data '{"type":"onboarding","status":"success","priority":10}'           
+            --data '{"jobId":"${JOB_ID}","status":"env.status"}'           
