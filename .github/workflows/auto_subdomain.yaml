@@ -202,4 +202,4 @@ jobs:
          echo "'${status}'"
          curl -X POST "https://dev-customer1-api.managedorg.io/callback" \
             -H "Content-Type: application/json" \
-            --data '{"jobId":"${JOB_ID}","status":"env.status"}'           
+            --data '{"callbackId":"${JOB_ID}","status":"env.status"}'           

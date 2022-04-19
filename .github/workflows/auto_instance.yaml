@@ -24,7 +24,7 @@ env:
   portVal: '${{ github.event.client_payload.deployment_file.portVal }}'
   domainName: '${{ github.event.client_payload.deployment_file.domainName }}'
   serviceName: '${{ github.event.client_payload.deployment_file.serviceName }}'
-  JOB_ID: '${{ github.event.client_payload.deployment_file.job_id }}'
+  JOB_ID: '${{ github.event.client_payload.deployment_file.callbackId }}'
   FRONTEND_NAME: '${{ github.event.client_payload.deployment_file.frontend_domain }}'
   BACKEND_NAME: '${{ github.event.client_payload.deployment_file.backend_domain }}' 
   EKS_CLUSTER: dev
