@@ -200,6 +200,6 @@ jobs:
          #echo "${{ env.status }}"
          echo "'${BACKEND_NAME}'"
          echo "'${status}'"
-         curl -X POST "https://dev.customer1-api.managedorg.io/callback" \
+         curl -X POST "https://dev-customer1-api.managedorg.io/callback" \
             -H "Content-Type: application/json" \
             --data '{"jobId":"${JOB_ID}","status":"env.status"}'           
