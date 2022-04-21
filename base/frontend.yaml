@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: frontend-deployment
   labels:
-    environment: abc
+    # environment: abc
     app: frontend
     version: v1
 spec:
@@ -11,7 +11,7 @@ spec:
   selector:
     matchLabels:
       app: frontend
-      environment: abc
+      # environment: abc
       version: v1
   template:
     metadata:

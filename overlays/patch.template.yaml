@@ -3,13 +3,13 @@ kind: Deployment
 metadata:
   name: frontend-deployment
   labels:
-    environment: moduleName
+    # environment: moduleName
     app: labelName
 spec:
   selector:
     matchLabels:
       app: labelName
-      environment: moduleName
+      # environment: moduleName
   template:
     metadata:
       labels: # labels to select/identify the deployment
