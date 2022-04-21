@@ -9,10 +9,12 @@ spec:
   selector:
     matchLabels:
       app: labelName
+      environment: moduleName
   template:
     metadata:
       labels: # labels to select/identify the deployment
         app: labelName
+        environment: moduleName
     spec:     # pod spec
       containers: 
       - name: frontend
