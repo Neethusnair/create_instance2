@@ -3,7 +3,6 @@ kind: Deployment
 metadata:
   name: frontend-deployment
   labels:
-    # environment: abc
     app: frontend
     version: v1
 spec:
@@ -11,13 +10,12 @@ spec:
   selector:
     matchLabels:
       app: frontend
-      # environment: abc
       version: v1
   template:
     metadata:
       labels: # labels to select/identify the deployment
         app: frontend
-        environment: abc
+        module: abc
         version: v1 
     spec:     # pod spec
       imagePullSecrets:

@@ -3,18 +3,16 @@ kind: Deployment
 metadata:
   name: frontend-deployment
   labels:
-    # environment: moduleName
     app: labelName
 spec:
   selector:
     matchLabels:
       app: labelName
-      # environment: moduleName
   template:
     metadata:
       labels: # labels to select/identify the deployment
         app: labelName
-        environment: moduleName
+        module: moduleName
     spec:     # pod spec
       containers: 
       - name: frontend
