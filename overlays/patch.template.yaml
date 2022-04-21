@@ -4,10 +4,12 @@ metadata:
   name: frontend-deployment
   labels:
     app: labelName
+    module: moduleName
 spec:
   selector:
     matchLabels:
       app: labelName
+      module: moduleName
   template:
     metadata:
       labels: # labels to select/identify the deployment

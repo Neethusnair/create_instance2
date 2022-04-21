@@ -4,12 +4,14 @@ metadata:
   name: frontend-deployment
   labels:
     app: frontend
+    module: abc
     version: v1
 spec:
   replicas: 1
   selector:
     matchLabels:
       app: frontend
+      module: abc
       version: v1
   template:
     metadata:
