@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: frontend-deployment
   labels:
-    module: donor-driver
+    environment: donor
     app: redcross1-customer
 spec:
   selector:
