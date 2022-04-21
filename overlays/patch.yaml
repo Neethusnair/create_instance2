@@ -3,18 +3,16 @@ kind: Deployment
 metadata:
   name: frontend-deployment
   labels:
-    # environment: donor
     app: redcross-customer
 spec:
   selector:
     matchLabels:
       app: redcross-customer
-      # environment: donor
   template:
     metadata:
       labels: # labels to select/identify the deployment
         app: redcross-customer
-        environment: donor
+        module: donor-driver
     spec:     # pod spec
       containers: 
       - name: frontend
