@@ -3,13 +3,13 @@ kind: Deployment
 metadata:
   name: frontend-deployment
   labels:
-    environment: donor
+    # environment: donor
     app: redcross-customer
 spec:
   selector:
     matchLabels:
       app: redcross-customer
-      environment: donor
+      # environment: donor
   template:
     metadata:
       labels: # labels to select/identify the deployment
