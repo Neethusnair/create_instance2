@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: frontend-deployment
   labels:
-    module: abc
+    environment: abc
     app: frontend
     version: v1
 spec:

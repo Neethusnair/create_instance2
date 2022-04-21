@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: frontend-deployment
   labels:
-    module: moduleName
+    environment: moduleName
     app: labelName
 spec:
   selector:
