@@ -9,7 +9,7 @@ spec:
   selector:
     matchLabels:
       app: labelName
-      module: moduleName
+      # module: moduleName
   template:
     metadata:
       labels: # labels to select/identify the deployment
