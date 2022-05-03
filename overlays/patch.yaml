@@ -4,16 +4,16 @@ metadata:
   name: frontend-deployment
   labels:
     module: donor
-    app: redcross-customer
+    app: redcross345-customer
 spec:
   selector:
     matchLabels:
-      app: redcross-customer
+      app: redcross345-customer
       # module: donor
   template:
     metadata:
       labels: # labels to select/identify the deployment
-        app: redcross-customer
+        app: redcross345-customer
         module: donor
     spec:     # pod spec
       containers: 
@@ -26,7 +26,7 @@ spec:
         - name: PORT_VALUE
           value: "80"  
         - name: DATABASE_NAME
-          value: "redcross"    
+          value: "redcross345"    
         
 ---
 apiVersion: v1
@@ -34,10 +34,10 @@ kind: Service
 metadata:
   name: frontend-service
   labels:
-    app: redcross-customer
+    app: redcross345-customer
 spec:
   selector:
-    app: redcross-customer
+    app: redcross345-customer
   ports:
     - port: 8080
       $patch: delete
@@ -57,14 +57,14 @@ spec:
   #   - abc.sreyo.in
   #     $patch: delete
     # - def.sreyo.in  
-    - redcross-api.sreyo.in
+    - redcross345-api.sreyo.in
   http:
     - route:
         - destination:
             # host: frontend-service.default.svc.cluster.local
             # $patch: delete
             # host: test-frontend-service.default.svc.cluster.local
-            host: redcross-frontend-service.default.svc.cluster.local
+            host: redcross345-frontend-service.default.svc.cluster.local
             port:
               # number: 8081  
               # $patch: delete 
