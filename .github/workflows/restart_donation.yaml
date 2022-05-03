@@ -1,0 +1,39 @@
+name: Restart instances on donation driver module
+
+on:
+  workflow_dispatch
+
+
+env:
+  EKS_CLUSTER: dev
+  EKS_REGION: us-east-2
+
+jobs:
+ Job1: 
+    name: Restart pods on donation driver module
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+   # AWS Credentials
+    - uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ${{ env.EKS_REGION }}
+
+    # Get the EKS credentials so we can deploy to the cluster
+    - run: |-
+        aws eks --region $EKS_REGION update-kubeconfig --name $EKS_CLUSTER
+          
+    # scale down replicas zero
+    - name: Scale down 
+      run: |-
+        kubectl scale deployments -l module=donor --replicas=0 
+      
+    # scale up replicas to one
+    - name: Scale up
+      run: |-
+        kubectl scale deployments -l module=donor --replicas=1  
