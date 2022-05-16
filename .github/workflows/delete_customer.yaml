@@ -1,13 +1,18 @@
 name: Delete customer-instance on stopping subscription
 
 on:
-  workflow_dispatch
+  #workflow_dispatch
+  repository_dispatch:
+    types: [delete]
 
 
 env:
-  DEPLOYMENT: redcross-frontend-deployment
-  SERVICE: redcross-frontend-service
-  VLSERVICE: redcross-frontend-vs
+  #DEPLOYMENT: redcross-frontend-deployment
+  DEPLOYMENT: "${{ github.event.client_payload.customer_name}}-frontend-deployment"
+  #SERVICE: redcross-frontend-service
+  SERVICE: "${{ github.event.client_payload.customer_name}}-frontend-service"
+  #VLSERVICE: redcross-frontend-vs
+  VLSERVICE: "${{ github.event.client_payload.customer_name}}-frontend-vs"
   EKS_CLUSTER: dev
   EKS_REGION: us-east-2
 
