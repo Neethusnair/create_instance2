@@ -47,7 +47,7 @@ jobs:
     # connect to db
     - name: connect to MongoDB Atlas
       run: |-
-        mongo $DB_CONNECTION
+        mongosh $DB_CONNECTION
 
     # delete db
     - name: Delete customer database
