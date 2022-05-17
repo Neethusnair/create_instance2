@@ -42,7 +42,7 @@ jobs:
     - run: |-
         aws eks --region $EKS_REGION update-kubeconfig --name $EKS_CLUSTER
           
-    # scale down replicas zero
+    # Delete customer instance
     - name: Delete deployment
       run: |-
         kubectl delete deployments $DEPLOYMENT

@@ -1,0 +1,60 @@
+name: Delete database
+
+on:
+  workflow_dispatch
+  # repository_dispatch:
+  #   types: [delete]
+
+
+env:
+  DB_CONNECTION: mongodb+srv://Test:1234@cluster0.cusya.mongodb.net/
+  DB_NAME: redcross
+  # #DEPLOYMENT: redcross-frontend-deployment
+  # DEPLOYMENT: "${{ github.event.client_payload.customer_name}}-frontend-deployment"
+  # #SERVICE: redcross-frontend-service
+  # SERVICE: "${{ github.event.client_payload.customer_name}}-frontend-service"
+  # #VLSERVICE: redcross-frontend-vs
+  # VLSERVICE: "${{ github.event.client_payload.customer_name}}-frontend-vs"
+  # EKS_CLUSTER: dev
+  # EKS_REGION: us-east-2
+
+jobs:
+ Job1: 
+    name: Delete db dynamically
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    # - name: Kubectl
+    #   uses: azure/setup-kubectl@v2.0
+    #   with:
+    #       version: 'v1.23.6'
+    #   id: install   
+
+  #  # AWS Credentials
+  #   - uses: aws-actions/configure-aws-credentials@v1
+  #     with:
+  #       aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  #       aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  #       aws-region: ${{ env.EKS_REGION }}
+
+  #   # Get the EKS credentials so we can deploy to the cluster
+  #   - run: |-
+  #       aws eks --region $EKS_REGION update-kubeconfig --name $EKS_CLUSTER
+          
+    # connect to db
+    - name: connect to MongoDB Atlas
+      run: |-
+        mongo $DB_CONNECTION
+
+    # delete db
+    - name: Delete customer database
+      run: |-
+        use $DB_NAME
+        db.dropDatabase()
+
+
+
+      
