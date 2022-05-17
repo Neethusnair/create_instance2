@@ -48,7 +48,7 @@ jobs:
     - name: connect to MongoDB Atlas
       run: |-
         mongosh $DB_CONNECTION
-        use $DB_NAME
+        use redcross
         db.dropDatabase()
 
     # # delete db
