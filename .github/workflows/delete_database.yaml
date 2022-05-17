@@ -44,16 +44,18 @@ jobs:
   #   - run: |-
   #       aws eks --region $EKS_REGION update-kubeconfig --name $EKS_CLUSTER
           
-    # connect to db
+    # connect to mongo and delete db
     - name: connect to MongoDB Atlas
       run: |-
         mongosh $DB_CONNECTION
-
-    # delete db
-    - name: Delete customer database
-      run: |-
         use $DB_NAME
         db.dropDatabase()
+
+    # # delete db
+    # - name: Delete customer database
+    #   run: |-
+    #     use $DB_NAME
+    #     db.dropDatabase()
 
 
 
