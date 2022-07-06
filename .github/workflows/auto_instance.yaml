@@ -25,7 +25,7 @@ env:
   domainName: '${{ github.event.client_payload.deployment_file.domainName }}'
   serviceName: '${{ github.event.client_payload.deployment_file.serviceName }}'
   moduleName: '${{ github.event.client_payload.deployment_file.moduleName }}'
-  imageName: ‘${{ github.event.client_payload.deployment_file.image}}’
+  imageName: '${{ github.event.client_payload.deployment_file.image }}'
   JOB_ID: '${{ github.event.client_payload.deployment_file.callbackId }}'
   FRONTEND_NAME: '${{ github.event.client_payload.deployment_file.frontend_domain }}'
   BACKEND_NAME: '${{ github.event.client_payload.deployment_file.backend_domain }}' 
