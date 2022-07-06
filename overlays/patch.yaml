@@ -4,20 +4,21 @@ metadata:
   name: frontend-deployment
   labels:
     module: donor-driver
-    app: redcross-customer
+    app: redcrosstest-customer
 spec:
   selector:
     matchLabels:
-      app: redcross-customer
+      app: redcrosstest-customer
       # module: donor-driver
   template:
     metadata:
       labels: # labels to select/identify the deployment
-        app: redcross-customer
+        app: redcrosstest-customer
         module: donor-driver
     spec:     # pod spec
       containers: 
       - name: frontend
+         image: ‘test-image’
         ports:
         - containerPort: 10
           $patch: delete
@@ -26,7 +27,7 @@ spec:
         - name: PORT_VALUE
           value: "1337"  
         - name: DATABASE_NAME
-          value: "redcross"    
+          value: "redcrosstest"    
         
 ---
 apiVersion: v1
@@ -34,10 +35,10 @@ kind: Service
 metadata:
   name: frontend-service
   labels:
-    app: redcross-customer
+    app: redcrosstest-customer
 spec:
   selector:
-    app: redcross-customer
+    app: redcrosstest-customer
   ports:
     - port: 8080
       $patch: delete
